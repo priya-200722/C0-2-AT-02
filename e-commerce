@@ -1,0 +1,71 @@
+#include <iostream>
+using namespace std;
+
+class Product {
+private:
+    int id, quantity;
+    string name;
+    float price;
+    static int totalProducts;
+
+public:
+    void getData() {
+        cout << "\nEnter Product ID: ";
+        cin >> id;
+        cout << "Enter Name: ";
+        cin >> name;
+
+        do {
+            cout << "Enter Price (>0): ";
+            cin >> price;
+        } while (price <= 0);
+
+        do {
+            cout << "Enter Quantity (>0): ";
+            cin >> quantity;
+        } while (quantity <= 0);
+
+        totalProducts++;
+    }
+
+    float calculateTotal() {
+        return price * quantity;
+    }
+
+    void display() {
+        cout << "\nID: " << id;
+        cout << "\nName: " << name;
+        cout << "\nPrice: " << price;
+        cout << "\nQuantity: " << quantity;
+        cout << "\nTotal: " << calculateTotal() << endl;
+    }
+
+    static void showTotalProducts() {
+        cout << "\nTotal Products: " << totalProducts << endl;
+    }
+};
+
+int Product::totalProducts = 0;
+
+int main() {
+    int n;
+    cout << "Enter number of products: ";
+    cin >> n;
+
+    Product p[n];
+    float grandTotal = 0;
+
+    for (int i = 0; i < n; i++)
+        p[i].getData();
+
+    cout << "\n===== BILL =====\n";
+    for (int i = 0; i < n; i++) {
+        p[i].display();
+        grandTotal += p[i].calculateTotal();
+    }
+
+    cout << "\nGrand Total: " << grandTotal << endl;
+    Product::showTotalProducts();
+
+    return 0;
+}
